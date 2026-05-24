@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon material-symbols-outlined">description</span>
+      <span class="brand-title">Resume Assistant</span>
+    </div>
+
+    <div id="connection-card" class="connection-card">
+      <div class="connection-card-header">
+        <span id="connection-dot" class="status-dot"></span>
+        <span id="connection-label" class="label-caps">Checking…</span>
+      </div>
+      <p class="connection-sub">Groq AI Status</p>
+      <p id="connection-model" class="connection-model">—</p>
+    </div>
+
+    <section class="sidebar-section">
+      <div class="section-header">
+        <h2 class="label-caps">Resumes</h2>
+        <button type="button" id="refresh-files" class="icon-btn" title="Refresh files" aria-label="Refresh files">
+          <span class="material-symbols-outlined">refresh</span>
+        </button>
+      </div>
+      <div class="search-wrap">
+        <span class="material-symbols-outlined search-icon">search</span>
+        <input type="search" id="resume-search" class="search-input" placeholder="Search resumes…" autocomplete="off" />
+      </div>
+      <ul id="resumes-list" class="file-cards" aria-label="Resume files"></ul>
+    </section>
+
+    <section class="sidebar-section sidebar-section-output">
+      <h2 class="label-caps">Output</h2>
+      <ul id="output-list" class="file-cards file-cards-compact" aria-label="Output files"></ul>
+    </section>
+
+    <button type="button" id="new-analysis" class="btn-new-analysis">
+      <span class="material-symbols-outlined">add</span>
+      New Analysis
+    </button>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="topbar-titles">
+        <h1>AI Resume Workspace</h1>
+        <p>Ask questions across local PDF, DOCX, and TXT resumes.</p>
+      </div>
+      <div class="topbar-actions">
+        <span id="api-badge" class="api-badge">Local Flask API</span>
+        <button type="button" class="icon-btn" title="Help" aria-label="Help">
+          <span class="material-symbols-outlined">help</span>
+        </button>
+        <button type="button" class="icon-btn" title="Settings" aria-label="Settings">
+          <span class="material-symbols-outlined">settings</span>
+        </button>
+        <div class="avatar" aria-hidden="true">RA</div>
+      </div>
+    </header>
+
+    <div class="chat-area">
+      <div id="example-chips" class="example-chips">
+        <button type="button" class="chip example-btn" data-query="Read all resumes in the resumes folder">
+          <span class="material-symbols-outlined">folder_open</span>
+          Read all resumes
+        </button>
+        <button type="button" class="chip example-btn" data-query="Find resumes mentioning Python experience">
+          <span class="material-symbols-outlined">code</span>
+          Find Python experience
+        </button>
+        <button type="button" class="chip example-btn" data-query="Create a summary file for resume_john_doe.pdf">
+          <span class="material-symbols-outlined">auto_awesome</span>
+          Summarize John Doe PDF
+        </button>
+        <button type="button" class="chip example-btn" data-query="list the files in the resumes folder">
+          <span class="material-symbols-outlined">list</span>
+          List resume files
+        </button>
+      </div>
+
+      <div id="chat-thread" class="chat-thread" role="log" aria-live="polite" aria-relevant="additions">
+        <div class="welcome-card" id="welcome-card">
+          <span class="material-symbols-outlined welcome-icon">smart_toy</span>
+          <p>Ask the assistant to read, search, or summarize resumes in the <code>resumes/</code> folder.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="composer">
+      <div class="composer-inner">
+        <textarea id="query" rows="2" placeholder="Ask about skills, experience, or create a summary…"></textarea>
+        <div class="composer-toolbar">
+          <div class="composer-tools">
+            <button type="button" class="icon-btn icon-btn-muted" title="Attach file (coming soon)" disabled>
+              <span class="material-symbols-outlined">attach_file</span>
+            </button>
+            <button type="button" class="icon-btn icon-btn-muted" title="Not available" disabled>
+              <span class="material-symbols-outlined">image</span>
+            </button>
+            <button type="button" class="icon-btn icon-btn-muted" title="Not available" disabled>
+              <span class="material-symbols-outlined">alternate_email</span>
+            </button>
+          </div>
+          <div class="composer-send-group">
+            <span id="loading" class="composer-hint hidden">Thinking…</span>
+            <span class="composer-hint">Ctrl+Enter to send</span>
+            <button type="button" id="send" class="btn-send" aria-label="Send message">
+              <span class="material-symbols-outlined">send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resume Assistant - AI Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171c21;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30353b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #424754;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#353a3f",
+                      "pdf-badge": "#ef4444",
+                      "text-primary": "#e7ecf3",
+                      "inverse-primary": "#005ac2",
+                      "surface-container-high": "#252a30",
+                      "error-red": "#f87171",
+                      "secondary-fixed-dim": "#bec7db",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#00285d",
+                      "primary-container": "#4d8eff",
+                      "surface": "#0f1419",
+                      "inverse-on-surface": "#2c3136",
+                      "on-secondary-container": "#acb5c9",
+                      "surface-dim": "#0f1419",
+                      "on-error-container": "#ffdad6",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-background": "#dee3ea",
+                      "tertiary-container": "#8591a7",
+                      "secondary": "#bec7db",
+                      "on-primary-fixed": "#001a42",
+                      "primary": "#adc6ff",
+                      "surface-variant": "#30353b",
+                      "on-surface": "#dee3ea",
+                      "success-green": "#7dd3a8",
+                      "surface-container-highest": "#30353b",
+                      "tertiary": "#bbc7de",
+                      "docx-badge": "#3b82f6",
+                      "on-secondary-fixed": "#131c2a",
+                      "tertiary-fixed-dim": "#bbc7de",
+                      "inverse-surface": "#dee3ea",
+                      "outline-variant": "#424754",
+                      "on-secondary-fixed-variant": "#3e4758",
+                      "on-primary": "#002e6a",
+                      "background": "#0f1419",
+                      "on-tertiary-fixed": "#101c2d",
+                      "on-surface-variant": "#c2c6d6",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-tint": "#adc6ff",
+                      "text-muted": "#9aa8b8",
+                      "surface-container-lowest": "#0a0f14",
+                      "on-error": "#690005",
+                      "on-secondary": "#283140",
+                      "on-tertiary": "#253143",
+                      "on-tertiary-container": "#1e2a3c",
+                      "secondary-container": "#3e4758",
+                      "secondary-fixed": "#dae3f7",
+                      "tertiary-fixed": "#d7e3fb",
+                      "on-primary-fixed-variant": "#004395",
+                      "surface-container-low": "#171c21",
+                      "outline": "#8c909f",
+                      "on-tertiary-fixed-variant": "#3b475a",
+                      "txt-badge": "#64748b",
+                      "surface-container": "#1b2025",
+                      "accent-hover": "#2563eb",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "24px",
+                      "container-max-width": "840px",
+                      "stack-md": "16px",
+                      "sidebar-width": "320px",
+                      "margin-page": "24px",
+                      "topbar-height": "72px",
+                      "composer-min-height": "120px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "code-sm": ["JetBrains Mono"],
+                      "title-sm": ["Inter"],
+                      "meta-xs": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-caps": ["Inter"]
+              },
+              "fontSize": {
+                      "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "title-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "meta-xs": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden flex h-screen">
+<!-- Sidebar Section -->
+<aside class="fixed left-0 top-0 h-full w-[320px] bg-surface-container border-r border-outline-variant flex flex-col overflow-y-auto">
+<!-- Brand Header -->
+<div class="px-6 py-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-headline-md fill-icon">description</span>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface">Resume Assistant</h1>
+</div>
+<!-- Connection Status Card -->
+<div class="mx-4 mb-6 p-4 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-2 rounded-full bg-success-green animate-pulse"></div>
+<span class="font-code-sm text-code-sm text-success-green uppercase tracking-wider">Connected</span>
+</div>
+<div class="text-on-surface font-title-sm text-title-sm mb-1">Groq AI Status</div>
+<div class="text-text-muted font-meta-xs text-meta-xs truncate">llama-3.3-70b-versatile</div>
+</div>
+<!-- Navigation / File Explorer -->
+<nav class="flex-1 px-2 space-y-6">
+<!-- Resumes Section -->
+<div>
+<div class="px-4 mb-2 flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-text-muted uppercase">Resumes</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] cursor-pointer hover:text-primary transition-colors">add_circle</span>
+</div>
+<!-- Sidebar Search -->
+<div class="px-2 mb-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg pl-9 pr-4 py-2 text-body-sm font-body-sm focus:outline-none focus:border-primary transition-all" placeholder="Search resumes..." type="text"/>
+</div>
+</div>
+<div class="space-y-1">
+<!-- File Item: PDF -->
+<div class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg border-l-2 border-primary cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-pdf-badge">picture_as_pdf</span>
+<div class="flex-1 overflow-hidden">
+<div class="text-title-sm font-title-sm truncate">Giulia Gonzalez.pdf</div>
+<div class="text-meta-xs font-meta-xs opacity-70">81 KB</div>
+</div>
+</div>
+<!-- File Item: DOCX -->
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-docx-badge">description</span>
+<div class="flex-1 overflow-hidden">
+<div class="text-title-sm font-title-sm truncate">resume_jane_smith.docx</div>
+<div class="text-meta-xs font-meta-xs opacity-70">37 KB</div>
+</div>
+</div>
+<!-- File Item: TXT -->
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-txt-badge">article</span>
+<div class="flex-1 overflow-hidden">
+<div class="text-title-sm font-title-sm truncate">resume_alice_wang.txt</div>
+<div class="text-meta-xs font-meta-xs opacity-70">829 B</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Output Section -->
+<div>
+<div class="px-4 mb-2">
+<h3 class="font-label-caps text-label-caps text-text-muted uppercase">Output</h3>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg cursor-pointer transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-txt-badge">summarize</span>
+<div class="flex-1 overflow-hidden">
+<div class="text-title-sm font-title-sm truncate">summary_john_doe.txt</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Sidebar Footer -->
+<div class="p-4 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary font-title-sm py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                New Analysis
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[320px] flex-1 flex flex-col relative h-full">
+<!-- Top App Bar -->
+<header class="h-topbar-height w-full bg-surface border-b border-outline-variant flex items-center justify-between px-margin-page sticky top-0 z-20">
+<div>
+<h2 class="text-headline-md font-headline-md font-bold text-on-surface">AI Resume Workspace</h2>
+<p class="text-body-sm font-body-sm text-text-muted">Ask questions across local PDF, DOCX, and TXT resumes.</p>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">help</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A minimalist professional profile avatar icon for a technology workspace, styled with a sleek circular frame and a dark, modern blue-gray background palette matching a sophisticated AI software dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLpbRHT5Dzd7Enm22jYFEyUGCN8Un0w3vCkbgr7bDokF5GdV0y4IHIPZcjzWmAhtRlgjpepUML6xqf9f4UyOMBEmtSISRLpOIIA_F942LRZqER4d4KVUACnN8m_IqsLxYvZQpCU3VLV8ha4d3dTXsj8Q5ugh61cyroqkClZ7lVe_N5ylWrniQDxX3Kjvf4927tMos2K4Obj6MnvtfEyrMWoFqOCUOzJWTcgWMpTm4WOO07GBNefvXT7eMdo7eNaaBoTZlBwN1jHJ0"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Chat Canvas -->
+<div class="flex-1 overflow-y-auto pb-[180px]">
+<div class="max-w-container-max-width mx-auto px-margin-page pt-12 space-y-10">
+<!-- Query Chips Grid -->
+<div class="grid grid-cols-2 gap-3 mb-12">
+<button class="flex items-center justify-center gap-2 px-4 py-3 border border-outline-variant rounded-full text-body-sm font-body-sm text-on-surface-variant hover:bg-secondary-container hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">find_in_page</span>
+                        Read all resumes
+                    </button>
+<button class="flex items-center justify-center gap-2 px-4 py-3 border border-outline-variant rounded-full text-body-sm font-body-sm text-on-surface-variant hover:bg-secondary-container hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                        Find Python experience
+                    </button>
+<button class="flex items-center justify-center gap-2 px-4 py-3 border border-outline-variant rounded-full text-body-sm font-body-sm text-on-surface-variant hover:bg-secondary-container hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                        Summarize John Doe PDF
+                    </button>
+<button class="flex items-center justify-center gap-2 px-4 py-3 border border-outline-variant rounded-full text-body-sm font-body-sm text-on-surface-variant hover:bg-secondary-container hover:text-primary hover:border-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                        List resume files
+                    </button>
+</div>
+<!-- Chat Thread -->
+<div class="space-y-8">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2">
+<div class="max-w-[80%] bg-primary-container text-on-primary-container px-5 py-3 rounded-2xl rounded-tr-none shadow-sm font-body-md">
+                            Find resumes mentioning machine learning experience
+                        </div>
+<span class="text-meta-xs font-meta-xs text-text-muted mr-2">10:42 AM</span>
+</div>
+<!-- Assistant Message -->
+<div class="flex gap-4 items-start">
+<div class="w-9 h-9 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary fill-icon text-[20px]">psychology</span>
+</div>
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-surface-container-high border border-outline-variant px-5 py-4 rounded-2xl rounded-tl-none text-on-surface shadow-md">
+<p class="mb-3">I searched all resumes in the folder. Alice Wang and John Doe mention machine learning or related skills.</p>
+<p class="mb-3">Jane Smith’s resume focuses on product management without ML keywords.</p>
+<p>Would you like a detailed summary of either candidate?</p>
+</div>
+<div class="flex gap-2 items-center">
+<span class="text-meta-xs font-meta-xs text-text-muted ml-1">10:42 AM</span>
+<div class="flex gap-1">
+<button class="p-1 text-text-muted hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">thumb_up</span></button>
+<button class="p-1 text-text-muted hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Thinking State Placeholder (Hidden) -->
+<div class="hidden flex gap-4 items-start animate-pulse" id="thinking">
+<div class="w-9 h-9 rounded-lg bg-surface-container border border-outline-variant flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-text-muted text-[20px]">psychology</span>
+</div>
+<div class="py-3 px-1 text-text-muted italic text-body-sm">Thinking...</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Chat Composer -->
+<div class="absolute bottom-0 left-0 w-full bg-surface pt-4 pb-8 px-margin-page border-t border-outline-variant/30 shadow-[0px_-4px_20px_rgba(0,0,0,0.4)]">
+<div class="max-w-container-max-width mx-auto relative">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl focus-within:border-primary transition-all overflow-hidden">
+<textarea class="w-full min-h-[100px] bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-text-muted px-4 py-4 resize-none font-body-md" id="chat-input" placeholder="Ask about skills, experience, or create a summary..."></textarea>
+<div class="flex items-center justify-between px-4 py-3 border-t border-outline-variant/20 bg-surface-container-low/50">
+<div class="flex gap-3 text-text-muted">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-[20px]">attach_file</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-[20px]">image</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors text-[20px]">alternate_email</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-meta-xs font-meta-xs text-text-muted hidden md:inline">Ctrl+Enter to send</span>
+<button class="bg-primary text-on-primary-container p-2 rounded-lg hover:bg-primary-container transition-all active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interaction for the textarea
+        const textarea = document.getElementById('chat-input');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Add a slight hover effect to the file list items
+        document.querySelectorAll('nav .cursor-pointer').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                // Potential for subtle sound or haptic feedback mock
+            });
+        });
+    </script>
+</body></html>
