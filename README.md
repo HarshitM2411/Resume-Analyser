@@ -1,4 +1,4 @@
-# Resume Assistant
+# Resume Analyser
 
 LLM-powered assistant that reads, searches, and summarizes resume files (PDF, DOCX, TXT) using Groq and local file-system tools.
 
