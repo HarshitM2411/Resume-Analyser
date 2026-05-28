@@ -75,17 +75,66 @@ def _render_connection_card() -> None:
         st.caption("Add secrets in Streamlit Cloud or a local `.env` file.")
 
 
-def _render_file_list(files: list, *, compact: bool = False) -> None:
+def _handle_delete(filepath: str) -> None:
+    import fs_tools
+
+    result = fs_tools.delete_file(filepath)
+    if result.get("success"):
+        st.sidebar.success(f"Deleted {result.get('filename', Path(filepath).name)}")
+        st.rerun()
+    st.sidebar.error(result.get("error", "Delete failed"))
+
+
+def _render_resume_list(files: list) -> None:
     if not files:
         st.caption("No files")
         return
     for f in files:
         badge = _ext_badge(f.get("extension", ""))
-        label = f"{f['filename']} · {_format_bytes(f['size_bytes'])} · {badge}"
-        if compact:
-            st.text(label)
-        else:
-            st.markdown(f"**{f['filename']}**  \n`{_format_bytes(f['size_bytes'])}` · {badge}")
+        info_col, action_col = st.columns([5, 1])
+        with info_col:
+            st.markdown(
+                f"**{f['filename']}**  \n"
+                f"`{_format_bytes(f['size_bytes'])}` · {badge}"
+            )
+        with action_col:
+            if st.button(
+                "🗑",
+                key=f"del_resume_{f['filename']}",
+                help=f"Delete {f['filename']}",
+            ):
+                _handle_delete(f["filepath"])
+
+
+def _render_output_list(files: list) -> None:
+    if not files:
+        st.caption("No files")
+        return
+    for f in files:
+        badge = _ext_badge(f.get("extension", ""))
+        st.text(
+            f"{f['filename']} · {_format_bytes(f['size_bytes'])} · {badge}"
+        )
+        path = PROJECT_ROOT / f["filepath"]
+        dl_col, del_col = st.columns(2)
+        with dl_col:
+            if path.is_file():
+                with open(path, encoding="utf-8", errors="replace") as fh:
+                    st.download_button(
+                        label="Download",
+                        data=fh.read(),
+                        file_name=f["filename"],
+                        key=f"dl_{f['filename']}",
+                        use_container_width=True,
+                    )
+        with del_col:
+            if st.button(
+                "Delete",
+                key=f"del_output_{f['filename']}",
+                use_container_width=True,
+                help=f"Delete {f['filename']}",
+            ):
+                _handle_delete(f["filepath"])
 
 
 def _save_upload(uploaded_file) -> None:
@@ -141,23 +190,11 @@ def main() -> None:
 
         st.markdown("**RESUMES**")
         resumes = fs_tools.list_files("resumes")
-        _render_file_list(resumes)
+        _render_resume_list(resumes)
 
         st.markdown("**OUTPUT**")
         outputs = fs_tools.list_files("output")
-        _render_file_list(outputs, compact=True)
-
-        for out in outputs:
-            path = PROJECT_ROOT / out["filepath"]
-            if path.is_file():
-                with open(path, encoding="utf-8", errors="replace") as f:
-                    st.download_button(
-                        label=f"Download {out['filename']}",
-                        data=f.read(),
-                        file_name=out["filename"],
-                        key=f"dl_{out['filename']}",
-                        use_container_width=True,
-                    )
+        _render_output_list(outputs)
 
         if st.button("New analysis", use_container_width=True, type="primary"):
             st.session_state.messages = []

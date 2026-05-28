@@ -32,6 +32,14 @@ def is_safe_write_path(filepath: str) -> bool:
     return is_relative_to(resolved, OUTPUT_DIR)
 
 
+def is_safe_delete_path(filepath: str) -> bool:
+    """Allow deletes only from the resumes and output directories."""
+    resolved = Path(filepath).expanduser().resolve(strict=False)
+    return is_relative_to(resolved, RESUMES_DIR) or is_relative_to(
+        resolved, OUTPUT_DIR
+    )
+
+
 def normalize_text(text: str) -> str:
     """Collapse runs of whitespace; strip leading/trailing blanks."""
     text = re.sub(r"\n{3,}", "\n\n", text)
@@ -127,10 +135,17 @@ def list_files(directory: str, extension: str = None) -> list:
             logging.warning("list_files: directory '%s' does not exist", directory)
             return []
 
+        dir_path = Path(directory).resolve()
+        is_output_dir = dir_path == OUTPUT_DIR
+
         entries = []
         with os.scandir(directory) as it:
             for entry in it:
                 if not entry.is_file():
+                    continue
+                if entry.name.startswith("."):
+                    continue
+                if is_output_dir and entry.name == "test.txt":
                     continue
 
                 entry_ext = Path(entry.name).suffix.lower()
@@ -184,6 +199,37 @@ def write_file(filepath: str, content: str) -> dict:
             "bytes_written": len(encoded),
             "created_dirs": not dir_existed,
         }
+
+    except Exception as e:
+        return {"success": False, "filepath": filepath, "error": str(e)}
+
+
+def delete_file(filepath: str) -> dict:
+    try:
+        if not is_safe_delete_path(filepath):
+            return {
+                "success": False,
+                "filepath": filepath,
+                "error": "Path not allowed — deletes are restricted to resumes/ and output/",
+            }
+
+        path = Path(filepath)
+        if not path.exists():
+            return {
+                "success": False,
+                "filepath": filepath,
+                "error": f"FileNotFoundError: {filepath} does not exist",
+            }
+        if not path.is_file():
+            return {
+                "success": False,
+                "filepath": filepath,
+                "error": "Not a file",
+            }
+
+        filename = path.name
+        path.unlink()
+        return {"success": True, "filepath": filepath, "filename": filename}
 
     except Exception as e:
         return {"success": False, "filepath": filepath, "error": str(e)}
